@@ -20,7 +20,7 @@ class SlackNotifier
                     }
 
     client.chat_postMessage(channel: slack_channel,
-                            text: 'Someone is calling here!',
+                            text: 'Someone is calling <!here>!',
                             attachments: [notification].to_json) unless is_twilio_client?(from)
 
   end
