@@ -7,4 +7,4 @@ twilio:
   app_sid: 'your_twilio_app_sid'
   client_name: 'your_twilio_client_name'
   caller: 'your_twilio_phone_number'
-web_client_link: 'your_web_client_name'
+web_client_link: 'your_web_client_link'
