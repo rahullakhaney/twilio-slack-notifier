@@ -1,0 +1,26 @@
+AlignParameters:
+  Enabled: false
+AllCops:
+  TargetRubyVersion: 2.4
+Documentation:
+  Enabled: false
+LineLength:
+  Max: 100
+Metrics/AbcSize:
+  Max: 20
+Metrics/BlockLength:
+  Enabled: false
+MethodLength:
+  CountComments: false
+  Max: 15
+ClassLength:
+  CountComments: false
+  Max: 200
+Style/AlignHash:
+  Enabled: false
+Style/DotPosition:
+  EnforcedStyle: leading
+Style/FileName:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
