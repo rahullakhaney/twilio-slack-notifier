@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetupTwilioDevice
   attr_reader :account_sid, :token, :app_sid, :client_name
 

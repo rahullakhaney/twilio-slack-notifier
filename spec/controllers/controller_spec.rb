@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Controller do
@@ -16,8 +18,8 @@ describe Controller do
 
     it 'passes SetupTwilioClient service when creating Conference' do
       allow(CreateTwilioConference).to receive_message_chain(:new, :call)
-      expect(CreateTwilioConference).to receive(:new)
-                                          .with(hash_including(client: Twilio::REST::Client))
+      expect(CreateTwilioConference).to receive(:new) \
+        .with(hash_including(client: Twilio::REST::Client))
       subject
     end
 
@@ -33,8 +35,8 @@ describe Controller do
   end
 
   describe 'GET /call' do
+    subject { get '/call', params }
 
-    subject { get "/call", params }
     before { allow(ConferenceTokenHandler).to receive(:get_current_token) { 'ABC' } }
 
     context 'when no token passed' do
@@ -57,7 +59,7 @@ describe Controller do
 
     context 'when proper token passed' do
       let(:params) { { 'conf_token' => 'ABC' } }
-      let(:capability) { double() }
+      let(:capability) { double }
 
       before do
         allow(SetupTwilioDevice).to receive_message_chain(:new, :call) { capability }

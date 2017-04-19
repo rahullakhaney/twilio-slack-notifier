@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTwilioConference
   attr_reader :client, :caller
 
@@ -30,7 +32,7 @@ class CreateTwilioConference
                    startConferenceOnEnter: true,
                    maxParticipants: 2,
                    endConferenceOnExit: true,
-                   record: "record-from-start"
+                   record: 'record-from-start'
     end
   end
 

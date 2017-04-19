@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class ConferenceTokenHandler
@@ -5,7 +7,7 @@ class ConferenceTokenHandler
     @token = SecureRandom.hex(20)
   end
 
-  def self.get_current_token
+  def self.current_token
     @token
   end
 end

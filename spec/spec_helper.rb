@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV['RACK_ENV'] = 'test'
 
 require File.expand_path('../../twilio-slack-notifier.rb', __FILE__)

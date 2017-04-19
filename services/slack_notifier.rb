@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack'
 require 'json/ext'
 
@@ -11,23 +13,27 @@ class SlackNotifier
   end
 
   def incoming_call_notification(conf_token:, web_client_link:, location:, from:)
-    notification = {
-                     'fallback': "Someone is calling but you can't answer it here.",
-                     'color': '#36a64f',
-                     'author_name': "Number: #{from}\n Location: #{location}",
-                     'title': 'Click HERE to answer the call',
-                     'title_link': "#{web_client_link}?conf_token=#{conf_token}"
-                    }
+    notification =
+      {
+        'fallback': 'Someone is calling but you can\'t answer it here.',
+        'color': '#36a64f',
+        'author_name': "Number: #{from}\n Location: #{location}",
+        'title': 'Click HERE to answer the call',
+        'title_link': "#{web_client_link}?conf_token=#{conf_token}"
+      }
+
+    return unless twilio_client?(from)
 
     client.chat_postMessage(channel: slack_channel,
                             text: 'Someone is calling <!here>!',
-                            attachments: [notification].to_json) unless is_twilio_client?(from)
-
+                            attachments: [notification].to_json)
   end
 
   def answered_call_notification(from)
+    return if twilio_client?(from)
+
     client.chat_postMessage(channel: slack_channel,
-                            text: 'Call answered :point_up:') if is_twilio_client?(from)
+                            text: 'Call answered :point_up:')
   end
 
   def finished_call_notification
@@ -37,7 +43,7 @@ class SlackNotifier
 
   private
 
-  def is_twilio_client?(from)
+  def twilio_client?(from)
     from == "client:#{twilio_name}"
   end
 end
