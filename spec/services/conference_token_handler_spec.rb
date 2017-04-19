@@ -16,7 +16,7 @@ describe ConferenceTokenHandler do
     let!(:generated_token) { described_class.generate }
 
     it 'gets proper current token' do
-      expect(described_class.get_current_token).to eq generated_token
+      expect(described_class.current_token).to eq generated_token
     end
   end
 end

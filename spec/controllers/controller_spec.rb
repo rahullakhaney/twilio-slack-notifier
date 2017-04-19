@@ -37,7 +37,7 @@ describe Controller do
   describe 'GET /call' do
     subject { get '/call', params }
 
-    before { allow(ConferenceTokenHandler).to receive(:get_current_token) { 'ABC' } }
+    before { allow(ConferenceTokenHandler).to receive(:current_token) { 'ABC' } }
 
     context 'when no token passed' do
       let(:params) { { 'conf_token' => nil } }
