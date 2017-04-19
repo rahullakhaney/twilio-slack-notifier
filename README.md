@@ -44,7 +44,7 @@ When we're done with Twilio, it's time to create a simple Slack application. Go 
 
 #### Twilio-Slack-Notifier setup
 
-Clone the repo, fill the configuration file, bundle install and voila! We're done!
+Clone the repo, rename `config/config.yml.sample` file to `config/config.yml`, fill it with proper data, bundle install and voila! We're done!
 
 ### Requirements
 
