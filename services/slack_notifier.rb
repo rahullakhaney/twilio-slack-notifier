@@ -22,7 +22,7 @@ class SlackNotifier
         'title_link': "#{web_client_link}?conf_token=#{conf_token}"
       }
 
-    return unless twilio_client?(from)
+    return if twilio_client?(from)
 
     client.chat_postMessage(channel: slack_channel,
                             text: 'Someone is calling <!here>!',
@@ -30,7 +30,7 @@ class SlackNotifier
   end
 
   def answered_call_notification(from)
-    return if twilio_client?(from)
+    return unless twilio_client?(from)
 
     client.chat_postMessage(channel: slack_channel,
                             text: 'Call answered :point_up:')
