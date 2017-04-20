@@ -21,13 +21,39 @@ describe SlackNotifier do
   describe '#incoming_call_notification' do
     before { allow_any_instance_of(Slack::Client).to receive(:incoming_call_notification) }
 
-    context 'when all params are correct' do
+    context 'when all params are correct and the line is free' do
       it 'sends the message' do
-        expect(slack_client).to receive(:chat_postMessage)
+        expect(slack_client)
+          .to receive(:chat_postMessage)
+          .with(
+            hash_including(
+              channel: '#channel',
+              text: 'Someone is calling <!here>!'
+            )
+          )
+
         subject.incoming_call_notification(conf_token: 'token',
                                            web_client_link: 'netguru.co',
                                            location: 'Poznan',
-                                           from: '+4832153451')
+                                           from: '+4832153451') { false }
+      end
+    end
+
+    context 'when all params are correct and the line is busy' do
+      it 'sends the message' do
+        expect(slack_client)
+          .to receive(:chat_postMessage)
+          .with(
+            hash_including(
+              channel: '#channel',
+              text: 'What a rush! Someone is calling, but the line is busy!'
+            )
+          )
+
+        subject.incoming_call_notification(conf_token: 'token',
+                                           web_client_link: 'netguru.co',
+                                           location: 'Poznan',
+                                           from: '+4832153451') { true }
       end
     end
 
