@@ -37,8 +37,6 @@ class CreateTwilioConference
   end
 
   def check_line_busy
-    conferences = client.account.conferences
-    in_progress_conference = conferences.list(status: 'in-progress').first
-    in_progress_conference.participants.list.count == 2 if in_progress_conference
+    CheckLineBusy.new(client: client).call
   end
 end
