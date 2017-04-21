@@ -28,8 +28,13 @@ describe CreateTwilioConference do
         subject
       end
 
-      it 'says the message if the line is busy' do
-        expect(subject).to match(/Our line is currently busy, please try again later/)
+      it 'says the message' do
+        expect(subject)
+          .to match(/Our line is currently busy, leave us a message or try again later/)
+      end
+
+      it 'records the message' do
+        expect(subject).to match(/Record/)
       end
 
       it 'does not start the conference' do
