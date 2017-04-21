@@ -22,7 +22,10 @@ class CreateTwilioConference
   private
 
   def handle_busy_line(response)
-    response.Say 'Our line is currently busy, please try again later'
+    response.Say 'Our line is currently busy, leave us a message or try again later'
+    response.Record maxLength: 180,
+                    action: '/message_recorded',
+                    recordingStatusCallback: '/last_message_recording_ready'
     response.Hangup
   end
 
