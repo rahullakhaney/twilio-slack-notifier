@@ -13,10 +13,12 @@ class Controller < Sinatra::Base
                                    .call
 
   post '/twilio' do
-    notifier.incoming_call_notification(conf_token: ConferenceTokenHandler.generate,
-                                        web_client_link: AppConfig.web_client_link,
-                                        from: customer_number,
-                                        location: customer_location)
+    notifier.incoming_call_notification(
+      conf_token: ConferenceTokenHandler.generate,
+      web_client_link: AppConfig.web_client_link,
+      from: customer_number,
+      location: customer_location
+    ) { check_line_busy(client: twilio_client) }
 
     CreateTwilioConference.new(caller: AppConfig.twilio.caller,
                                client: twilio_client)
@@ -42,6 +44,10 @@ class Controller < Sinatra::Base
   end
 
   private
+
+  def check_line_busy(client:)
+    CheckLineBusy.new(client: client).call
+  end
 
   def conf_token_not_valid
     correct_token = ConferenceTokenHandler.current_token

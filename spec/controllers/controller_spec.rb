@@ -18,7 +18,7 @@ describe Controller do
 
     it 'passes SetupTwilioClient service when creating Conference' do
       allow(CreateTwilioConference).to receive_message_chain(:new, :call)
-      expect(CreateTwilioConference).to receive(:new) \
+      expect(CreateTwilioConference).to receive(:new)
         .with(hash_including(client: Twilio::REST::Client))
       subject
     end
