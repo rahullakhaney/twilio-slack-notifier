@@ -106,7 +106,10 @@ describe Controller do
   end
 
   describe 'POST /last_message_recording_ready' do
-    before { allow_any_instance_of(Twilio::REST::Recording).to receive(:duration) }
+    before do
+      allow_any_instance_of(Twilio::REST::Recording).to receive(:duration)
+      allow_any_instance_of(SlackNotifier).to receive(:last_message_recording_notification)
+    end
 
     subject { post '/last_message_recording_ready' }
 
