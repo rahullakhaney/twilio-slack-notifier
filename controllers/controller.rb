@@ -44,13 +44,12 @@ class Controller < Sinatra::Base
   end
 
   post '/message_recorded' do
-    200
+    201
   end
 
   post '/last_message_recording_ready' do
     recording = twilio_client.account.recordings.get(params['RecordingSid'])
     notifier.last_message_recording_notification(recording: recording)
-    200
   end
 
   private
