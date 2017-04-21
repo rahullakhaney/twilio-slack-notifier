@@ -36,6 +36,13 @@ class SlackNotifier
                             text: 'Call finished :end:')
   end
 
+  def last_message_recording_notification(recording:)
+    @recording = recording
+    client.chat_postMessage(channel: slack_channel,
+                            text: 'Last message recording is ready for you!',
+                            attachments: [last_recording_notification].to_json)
+  end
+
   private
 
   def post_incoming_call_message(line_busy: false)
@@ -70,6 +77,16 @@ class SlackNotifier
       'author_name': "Number: #{@from}\n Location: #{@location}",
       'title': 'Click HERE to answer the call',
       'title_link': "#{@web_client_link}?conf_token=#{@conf_token}"
+    }
+  end
+
+  def last_recording_notification
+    {
+      'fallback': 'You can\'t view the message here.',
+      'color': '#36a64f',
+      'author_name': "Number: #{@from}\n Duration: #{@recording.duration}",
+      'title': 'Click HERE to view the recording',
+      'title_link': @recording.mp3
     }
   end
 
