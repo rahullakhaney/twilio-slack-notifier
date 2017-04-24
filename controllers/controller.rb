@@ -1,17 +1,9 @@
 # frozen_string_literal: true
 
 class Controller < Sinatra::Base
-  attr_reader :notifier, :twilio_client
-
   use AppConfig
 
   set :views, File.expand_path('../../views', __FILE__)
-
-  def initialize(app = nil)
-    super
-    instantiate_slack_notifier
-    instantiate_twilio_client
-  end
 
   post '/twilio' do
     send_incoming_call_notification
@@ -42,14 +34,14 @@ class Controller < Sinatra::Base
 
   private
 
-  def instantiate_slack_notifier
-    @notifier = SlackNotifier.new(slack_token: AppConfig.slack.client_token,
+  def notifier
+    @notifier ||= SlackNotifier.new(slack_token: AppConfig.slack.client_token,
                                   channel: AppConfig.slack.channel,
                                   twilio_name: AppConfig.twilio.client_name)
   end
 
-  def instantiate_twilio_client
-    @twilio_client = SetupTwilioClient.new(account_sid: AppConfig.twilio.account_sid,
+  def twilio_client
+    @twilio_client ||= SetupTwilioClient.new(account_sid: AppConfig.twilio.account_sid,
                                            auth_token: AppConfig.twilio.auth_token)
                                       .call
   end
