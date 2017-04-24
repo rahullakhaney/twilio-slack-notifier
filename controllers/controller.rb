@@ -43,7 +43,7 @@ class Controller < Sinatra::Base
   def twilio_client
     @twilio_client ||= SetupTwilioClient.new(account_sid: AppConfig.twilio.account_sid,
                                            auth_token: AppConfig.twilio.auth_token)
-                                      .call
+                                        .call
   end
 
   def send_incoming_call_notification
