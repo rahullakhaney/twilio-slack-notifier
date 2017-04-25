@@ -21,6 +21,6 @@ class AppConfig
   end
 
   def respond_to_missing?(name, include_private = false)
-    @file.to_s.match(/"#{name.to_s}"/) || super
+    @config.key?(name.to_s) || super
   end
 end
