@@ -36,7 +36,6 @@ class Controller < Sinatra::Base
     @config ||= AppConfig.new(YAML.safe_load(File.read('config/config.yml')))
   end
 
-
   def notifier
     @notifier ||= SlackNotifier.new(slack_token: config.slack.client_token,
                                     channel: config.slack.channel,
