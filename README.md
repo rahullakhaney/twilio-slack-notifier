@@ -9,11 +9,14 @@ Twilio-Slack-Notifier is a simple app that allows you to answer phone calls in t
 5. Call is performed and recorded
 6. When one of the sides finishes the call, Slack is notifying about that fact and the line is ready to use again
 
+When your line is busy, one who is trying to reach your number can leave you a message. You're of course notified about this fact. Recorded message is available through the link posted on your Slack channel as soon as it's processed on Twilio server.
+
 This app may be useful when:
 * you don't want to care about a physical phone in your office, just a web browser, no additional devices needed
 * you have problems with clients that can't reach your number - thanks to Twilio you can pick a number from dozens of countries
 * you're tired of being sticked to your chair - anyone on your Slack channel can answer the call
 * you want to have a full history of your phone calls with a recorded copy of each one. If you missed something, you still have a note on Slack that somebody was trying to reach you
+* you work remotely - you can still act as an office staff member by answering the calls through the Internet from home
 
 ## How does it work?
 
@@ -27,7 +30,7 @@ To start using Twilio-Slack-Notifier you have to sign up to [Twilio](https://www
 
 #### Twilio incoming connection webhook
 
-After registering on Twilio and picking up a number, you have to configure your first webhook. To do that, please paste the address of your Twilio-Slack-Notifier app under `Phone numbers -> Configure -> Voice -> A call comes in`
+After registering on Twilio and picking up a number, you have to configure your first webhook. To do that, please paste the address of your Twilio-Slack-Notifier app under `Phone numbers -> Configure -> Voice -> A call comes in`.
 
 
 #### Twilio webhook for connection finished
@@ -48,7 +51,7 @@ Clone the repo, rename `config/config.yml.sample` file to `config/config.yml`, f
 
 ### Requirements
 
-To make Twilio-Slack-Notifier running you need an environment ready to handle Rack-based application based on [Sinatra](https://github.com/sinatra/sinatra).
+To make Twilio-Slack-Notifier running on your server you need an environment ready to handle Rack-based application based on [Sinatra](https://github.com/sinatra/sinatra). In terms of front-end, you have to bare in mind that processing live voice streaming (when you're talking with someone) [requires WebRTC/ORTC browser support](https://support.twilio.com/hc/en-us/articles/223180848-Which-browsers-support-WebRTC-). Answering the phone calls with the current version of Twilio-Slack-Notifier is not possible with every single browser. It works fine with Chrome, Firefox, Opera or Edge, but will not work properly on Safari or mobile device browsers, e.g. Chrome for Android. To check out the current status please use [this link](http://caniuse.com/#search=webrtc).
 
 ### Dependencies
 
@@ -81,14 +84,14 @@ web_client_link: 'https://my_web_client_endpoint.com/call'
 * `Slack channel` - it's just the channel name you want the notifications to be posted, can be actually anything as long as the channel exists
 * `Twilio account sid` - Get it in your Twilio dashboard after login: https://www.twilio.com/console
 * `Twilio auth token` - Just like above: https://www.twilio.com/console
-* `Twilio app sid` - You have to create a Twilio app first, go to Console -> Programmable Voice -> Tools -> TwiML apps. After creating a new app you'll get the Application SID there.
+* `Twilio app sid` - You have to create a Twilio app first, go to `Console -> Programmable Voice -> Tools -> TwiML apps`. After creating a new app you'll get the Application SID there
 * `Twilio client name` - it's a name you have to type in your Twilio dashboard and Twilio-Slack-Notifier config. It authorizes the browser to connect to your Twilio and perform the phone calls
 * `Caller` - your Twilio phone number
-* `Web client link` - the endpoint address for your web client - this link is posted on the Slack channel.
+* `Web client link` - the endpoint address for your web client - this link is posted on the Slack channel to allow your team members to answer the phone calls in the browser
 
 ## Contributing
 
-If you'd like to contribute to Twilio-Slack-Notifier, please feel free to do so! I'll be happy to help in case of any questions. For more information please check the [contributing guidelines](CONTRIBUTING.md)
+If you'd like to contribute to Twilio-Slack-Notifier, please feel free to do so! I'll be happy to help in case of any questions. For more information please check the [contributing guidelines](CONTRIBUTING.md).
 
 ## License
 
