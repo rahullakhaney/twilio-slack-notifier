@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Controller < Sinatra::Base
-  use AppConfig
-
   set :views, File.expand_path('../../views', __FILE__)
 
   post '/twilio' do
@@ -34,38 +32,43 @@ class Controller < Sinatra::Base
 
   private
 
+  def config
+    @config ||= AppConfig.new(YAML.safe_load(File.read('config/config.yml')))
+  end
+
+
   def notifier
-    @notifier ||= SlackNotifier.new(slack_token: AppConfig.slack.client_token,
-                                  channel: AppConfig.slack.channel,
-                                  twilio_name: AppConfig.twilio.client_name)
+    @notifier ||= SlackNotifier.new(slack_token: config.slack.client_token,
+                                    channel: config.slack.channel,
+                                    twilio_name: config.twilio.client_name)
   end
 
   def twilio_client
-    @twilio_client ||= SetupTwilioClient.new(account_sid: AppConfig.twilio.account_sid,
-                                           auth_token: AppConfig.twilio.auth_token)
+    @twilio_client ||= SetupTwilioClient.new(account_sid: config.twilio.account_sid,
+                                             auth_token: config.twilio.auth_token)
                                         .call
   end
 
   def send_incoming_call_notification
     notifier.incoming_call_notification(
       conf_token: ConferenceTokenHandler.generate,
-      web_client_link: AppConfig.web_client_link,
+      web_client_link: config.web_client_link,
       from: customer_number,
       location: customer_location
     ) { check_line_busy(client: twilio_client) }
   end
 
   def create_twilio_conference
-    CreateTwilioConference.new(caller: AppConfig.twilio.caller,
+    CreateTwilioConference.new(caller: config.twilio.caller,
                                client: twilio_client)
                           .call { notifier.answered_call_notification(customer_number) }
   end
 
   def setup_twilio_device
-    @capability = SetupTwilioDevice.new(account_sid: AppConfig.twilio.account_sid,
-                                       auth_token: AppConfig.twilio.auth_token,
-                                       app_sid: AppConfig.twilio.app_sid,
-                                       client_name: AppConfig.twilio.client_name)
+    @capability = SetupTwilioDevice.new(account_sid: config.twilio.account_sid,
+                                       auth_token: config.twilio.auth_token,
+                                       app_sid: config.twilio.app_sid,
+                                       client_name: config.twilio.client_name)
                                    .call
   end
 
