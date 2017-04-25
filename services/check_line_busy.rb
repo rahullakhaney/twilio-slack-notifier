@@ -8,14 +8,33 @@ class CheckLineBusy
   end
 
   def call
-    find_in_progress_conferences
+    line_busy?
   end
 
   private
 
-  def find_in_progress_conferences
-    conferences = client.account.conferences
-    in_progress_conference = conferences.list(status: 'in-progress').first
-    in_progress_conference.participants.list.count == 2 if in_progress_conference
+  def line_busy?
+    return false unless find_in_progress_conference
+    check_current_conference_participants
+  end
+
+  def check_current_conference_participants
+    conference_participants.list.count == 2
+  end
+
+  def find_in_progress_conference
+    client_conferences.list(status: 'in-progress').first
+  end
+
+  def conference_participants
+    find_in_progress_conference.participants
+  end
+
+  def client_conferences
+    client_account.conferences
+  end
+
+  def client_account
+    client.account
   end
 end

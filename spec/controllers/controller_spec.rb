@@ -97,4 +97,29 @@ describe Controller do
       expect(last_response.status).to be 200
     end
   end
+
+  describe 'POST /message_recorded' do
+    it 'returns 201' do
+      post '/message_recorded'
+      expect(last_response.status).to be 201
+    end
+  end
+
+  describe 'POST /last_message_recording_ready' do
+    before do
+      allow_any_instance_of(Twilio::REST::Recording).to receive(:duration)
+      allow_any_instance_of(SlackNotifier).to receive(:last_message_recording_notification)
+    end
+
+    subject { post '/last_message_recording_ready' }
+
+    it 'returns 201' do
+      subject
+      expect(last_response.status).to be 201
+    end
+    it 'sends the Slack notification' do
+      expect_any_instance_of(SlackNotifier).to receive(:last_message_recording_notification)
+      subject
+    end
+  end
 end
