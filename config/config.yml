@@ -1,0 +1,10 @@
+slack:
+  client_token: <%= ENV['SLACK_CLIENT_TOKEN'] %>
+  channel: <%= ENV['CALLIO_SLACK_CHANNEL'] %>
+twilio:
+  account_sid: <%= ENV['TWILIO_ACCOUNT_SID'] %>
+  auth_token: <%= ENV['TWILIO_AUTH_TOKEN'] %>
+  app_sid: <%= ENV['TWILIO_APP_SID'] %>
+  client_name: <%= ENV['TWILIO_CLIENT_NAME'] %>
+  caller: <%= ENV['TWILIO_PHONE_NUMBER'] %>
+web_client_link: <%= ENV['CALLIO_WEB_CLIENT_LINK'] %>
