@@ -1,0 +1,13 @@
+sinatra:
+  build: .
+  dockerfile: Dockerfile
+  env_file: /home/deploy/apps/callio/shared/secrets.env
+  labels:
+    - "netguru.appname=callio"
+    - "netguru.stage=production"
+  hostname: "netguru.callio.production.sinatra"
+  cpu_quota: 100000
+  mem_limit: 1000M
+  command: dumb-init rackup -p 3000 -o 0.0.0.0
+  expose:
+    - "3000"
