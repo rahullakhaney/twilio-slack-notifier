@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe SlackNotifier do
   let(:notifier) do
-    described_class.new(channel: '#channel', twilio_name: 'twilio', slack_token: 'ABC123')
+    described_class.new(channel: 'channel', twilio_name: 'twilio', slack_token: 'ABC123')
   end
   let(:slack_client) { double('slack_client') }
 
