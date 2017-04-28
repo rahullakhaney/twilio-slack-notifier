@@ -33,7 +33,8 @@ class Controller < Sinatra::Base
   private
 
   def config
-    @config ||= AppConfig.new(YAML.safe_load(File.read('config/config.yml')))
+    parsed_file = ERB.new(File.read('config/config.yml')).result
+    @config ||= AppConfig.new(YAML.safe_load(parsed_file))
   end
 
   def notifier
