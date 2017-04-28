@@ -8,7 +8,7 @@ class SlackNotifier
 
   def initialize(slack_token:, channel:, twilio_name:)
     @client = Slack::Client.new token: slack_token
-    @slack_channel = channel
+    @slack_channel = '#' + channel
     @twilio_name = twilio_name
   end
 
